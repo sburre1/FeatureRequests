@@ -28,16 +28,12 @@
         
         <script src="../includes/f_requests.js"></script>
     </head>
-        
-        
-    
     <body>
         <div class="container">
             <div class="form_main">
                 <h3 class="heading">Feature Requests Form</h1>
             
-                <form method="post" class="form">
-                    
+                <form method="post" class="form" enctype='multipart/form-data' action = '/feature/new'>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -47,7 +43,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -57,7 +52,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -75,8 +69,8 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Priority: </label>
-                                <input type="number" name="priority" placeholder="Enter priority">
+                                <label>Client Priority: </label>
+                                <input type="number" name="clientPriority" placeholder="Enter priority">
                             </div>
                         </div>
                     </div>
@@ -85,7 +79,7 @@
                             <div class="form-group">
                                 <!-- Date input -->
                                 <label class="control-label" for="date">Target Date: </label>
-                                <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
+                                <input class="form-control" id="date" name="targetDate" placeholder="MM/DD/YYYY" type="text"/>
                                 
                             </div>
                         </div>
