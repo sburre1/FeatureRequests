@@ -30,8 +30,43 @@ class webServerHandler(SimpleHTTPRequestHandler):
         if self.path == '/includes/f_requests.js':
             self.path = '/includes/f_requests.js'
             return SimpleHTTPRequestHandler.do_GET(self)
-        
-    
+        if self.path == '/view_all.html':
+            # query each client's records:
+            client_a_records = session.query(FeatureRequests.title, FeatureRequests.description, FeatureRequests.client_priority, FeatureRequests.target_date, FeatureRequests.product_area).filter(FeatureRequests.client == 'clientA').all()
+            client_b_records = session.query(FeatureRequests.title, FeatureRequests.description, FeatureRequests.client_priority, FeatureRequests.target_date, FeatureRequests.product_area).filter(FeatureRequests.client == 'clientB').all()
+            client_c_records = session.query(FeatureRequests.title, FeatureRequests.description, FeatureRequests.client_priority, FeatureRequests.target_date, FeatureRequests.product_area).filter(FeatureRequests.client == 'clientC').all()
+             
+            self.send_response(201)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write("<html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>")
+            self.wfile.write("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>")
+            self.wfile.write("<link rel='stylesheet' href='includes/styles.css'></head>")
+            self.wfile.write("<body class='container'>")
+            
+            # write client a data:
+            self.wfile.write("<h4 class='table_header' id='clientA'>Client A</h4> <div class='table-responsive'>")
+            self.wfile.write("<table class='table table-condensed table-striped table-bordered'><thead><tr><th scope='col'>Title</th><th scope='col'>Description</th><th scope='col'>Priority</th><th scope='col'>Date</th><th scope='col'>Product Area</th></tr></thead><tbody>")
+            
+            write_records_to_table(self, sorted(client_a_records, key=lambda priority:priority[2]))
+            self.wfile.write("</tbody></table></div>")
+            
+            self.wfile.write("<h4 class='table_header' id='clientB'>Client B</h4> <div class='table-responsive'>")
+            self.wfile.write("<table class='table table-condensed table-striped table-bordered'><thead><tr><th scope='col'>Title</th><th scope='col'>Description</th><th scope='col'>Priority</th><th scope='col'>Date</th><th scope='col'>Product Area</th></tr></thead><tbody>")
+            
+            # write client b data:
+            write_records_to_table(self, sorted(client_b_records, key=lambda priority:priority[2]))
+            self.wfile.write("</tbody></table></div>")
+            
+            self.wfile.write("<h4 class='table_header' id='clientC'>Client C</h4> <div class='table-responsive'>")
+            self.wfile.write("<table class='table table-condensed table-striped table-bordered'><thead><tr><th scope='col'>Title</th><th scope='col'>Description</th><th scope='col'>Priority</th><th scope='col'>Date</th><th scope='col'>Product Area</th></tr></thead><tbody>")
+            
+            # write client c data:
+            write_records_to_table(self, sorted(client_c_records, key=lambda priority:priority[2]))
+            self.wfile.write("</tbody></table></div>")
+            self.wfile.write("</body></html>")
+            
+
     def do_POST(self):
         ''' Handles all POST requests '''
         
@@ -95,6 +130,7 @@ class webServerHandler(SimpleHTTPRequestHandler):
             # write output to html page to let user know request was successfully submitted:
             self.wfile.write("<html><body>")
             self.wfile.write("<b>You have successfully submitted a new feature request.</b>")
+            self.wfile.write("<p>To view all feature requests submitted, <a href='/view_all.html'>View All</a>")
             self.wfile.write("<p>To submit another request, click to return: <a href='/'>Return To Main Page</a></p>")
             self.wfile.write("</body></html>")
             
@@ -111,6 +147,17 @@ def add_new_feature(form_title, form_description, form_client, form_client_prior
 
     session.add(new_feature)
     session.commit()
+
+def write_records_to_table(self, records):
+    ''' Creates the table rows for the HTML page '''
+    for x in records:
+        self.wfile.write("<tr>")
+        
+        for i in x:
+            self.wfile.write("<td>")
+            self.wfile.write(i)
+            self.wfile.write("</td>")
+        self.wfile.write("</tr>")
     
 def start_server():
     PORT = 8000

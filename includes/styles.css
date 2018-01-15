@@ -1,3 +1,14 @@
+#clientA {
+    background-color: #60D8EA;
+}
+
+#clientB {
+    background-color: #98fb98;
+}
+
+#clientC {
+    background-color: #F5F66B;
+}
 form_main {
     width: 100%;
 }
@@ -13,6 +24,13 @@ form_main {
     border-bottom: 1px solid #ADD8E6; /* light blue border */
     padding-bottom: 9px;
     position: relative;
+}
+.table_header {
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    text-align: center;
 }
 .form {
     border-radius: 7px;

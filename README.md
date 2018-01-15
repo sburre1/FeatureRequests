@@ -18,7 +18,9 @@ You must set up the database before you can begin to submit new feature requests
 Open a terminal window:
     1.) cd to FeatureRequests
     2.) Run the following command: python feature_requests.py -m 
-    3.) Open a web browser to: http://127.0.0.1:8000/ or http://localhost:8000/
+    3.) Open a web browser to add a new feature: http://127.0.0.1:8000/ or http://localhost:8000/
+    
+To view data of all clients, open a web browser to: http://127.0.0.1:8000/view_all.html or http://localhost:8000/view_all.html
     
     
 Viewing the Database manually:
