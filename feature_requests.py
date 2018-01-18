@@ -27,8 +27,17 @@ class webServerHandler(SimpleHTTPRequestHandler):
         if self.path == '/includes/styles.css':
             self.path = '/includes/styles.css'
             return SimpleHTTPRequestHandler.do_GET(self)
-        if self.path == '/includes/f_requests.js':
-            self.path = '/includes/f_requests.js'
+        if self.path == '/js/f_requests.js':
+            self.path = '/js/f_requests.js'
+            return SimpleHTTPRequestHandler.do_GET(self)
+        if self.path == '/js/knockout-3.4.2.js':
+            self.path = '/js/knockout-3.4.2.js'
+            return SimpleHTTPRequestHandler.do_GET(self)
+        if self.path == '/js/models/ClientViewModel.js':
+            self.path = '/js/models/ClientViewModel.js'
+            return SimpleHTTPRequestHandler.do_GET(self)
+        if self.path == '/js/models/ProductAreaViewModel.js':
+            self.path = '/js/models/ProductAreaViewModel.js'
             return SimpleHTTPRequestHandler.do_GET(self)
         if self.path == '/view_all.html':
             # query each client's records:
@@ -87,41 +96,43 @@ class webServerHandler(SimpleHTTPRequestHandler):
             form_target_date = form.getvalue('targetDate')
             form_product_area = form.getvalue('productArea')
             
-            # check to see if the priority exists in database for this client:
-            records_found = session.query(FeatureRequests.feature_id).filter(FeatureRequests.client == form_client, FeatureRequests.client_priority == int(form_client_priority)).all()
-            
-            # if records_found contains data, then re-order the priorities before adding new record:
-            if(len(records_found) > 0):
-                # query records for client to get all priority levels:
-                all_records_client = session.query(FeatureRequests.feature_id, FeatureRequests.client_priority).filter(FeatureRequests.client == form_client).all()
+            if(form_client != ""):
+                # check to see if the priority exists in database for this client:
+                records_found = session.query(FeatureRequests.feature_id).filter(FeatureRequests.client == form_client, FeatureRequests.client_priority == int(form_client_priority)).all()
                 
-                target_priority = int(form_client_priority)
-                
-                status_finished = False
-                
-                while(status_finished == False):
-                    # update existig records so that we can add the new record at the correct priority
-                    try:
-                        # find the index of target_priority record
-                        index = [y[1] for y in all_records_client].index(target_priority)
-                        
-                        # update the record in the database:
-                        update_obj = (session.query(FeatureRequests).filter(FeatureRequests.feature_id == all_records_client[index][0])).update({"client_priority": (FeatureRequests.client_priority + 1)})
-                        
-                        session.commit()
-                        
-                        # increment the target priority so that we can update the next record (if needed)
-                        target_priority += 1
-                    except ValueError:
-                        # the target_priority isn't found in the list.
-                        # Means, we are finished updating and can add the new record.
-                        status_finished = True
-                        
-                        # add new record to database:
-                        add_new_feature(form_title, form_description, form_client, form_client_priority, form_target_date, form_product_area)
-            elif (len(records_found) == 0):
-                # priority value is not taken, insert the new record into the database:
-                add_new_feature(form_title, form_description, form_client, form_client_priority, form_target_date, form_product_area)
+                # if records_found contains data, then re-order the priorities before adding new record:
+                if(len(records_found) > 0):
+                    # query records for client to get all priority levels:
+                    all_records_client = session.query(FeatureRequests.feature_id, FeatureRequests.client_priority).filter(FeatureRequests.client == form_client).all()
+                    
+                    target_priority = int(form_client_priority)
+                    
+                    status_finished = False
+                    
+                    while(status_finished == False):
+                        # update existig records so that we can add the new record at the correct priority
+                        try:
+                            # find the index of target_priority record
+                            index = [y[1] for y in all_records_client].index(target_priority)
+                            
+                            # update the record in the database:
+                            update_obj = (session.query(FeatureRequests).filter(FeatureRequests.feature_id == all_records_client[index][0])).update({"client_priority": (FeatureRequests.client_priority + 1)})
+                            
+                            session.commit()
+                            
+                            # increment the target priority so that we can update the next record (if needed)
+                            target_priority += 1
+                        except ValueError:
+                            # the target_priority isn't found in the list.
+                            # Means, we are finished updating and can add the new record.
+                            status_finished = True
+                            
+                            # add new record to database:
+                            add_new_feature(form_title, form_description, form_client, form_client_priority, form_target_date, form_product_area)
+                elif (len(records_found) == 0):
+                    # priority value is not taken, insert the new record into the database:
+                    add_new_feature(form_title, form_description, form_client, form_client_priority, form_target_date, form_product_area)
+        
                 
             self.send_response(201)
             self.send_header('Content-type', 'text/html')

@@ -1,7 +1,12 @@
 # FeatureRequests
 Homework assignment for BriteCore
 
+Project Uses the following Tech Stack:
+
 Python Version: Python 2.7.10
+SimpleHTTPServer
+JavaScript: KnockoutJS 3.4.2
+ORM: Sql-Alchemy
 
 SET UP DATABASE:
 ------------------------------------------

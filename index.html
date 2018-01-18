@@ -22,11 +22,13 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     
         
+
+        
         <!-- Bootstrap Date-Picker Plugin -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
         
-        <script src="../includes/f_requests.js"></script>
+        <script src="../js/f_requests.js"></script>
     </head>
     <body>
         <div class="container">
@@ -54,14 +56,9 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="form-group">
+                            <div class="form-group" id="clients">
                                 <label>Client: 
-                                    <select name="client">
-                                        <option value="">---</option>
-                                        <option value="clientA">Client A</option>
-                                        <option value="clientB">Client B</option>
-                                        <option value="clientC">Client C</option>
-                                    </select>
+                                    <select name="client" data-bind="options: clients, optionsText: 'label', optionsValue: 'id', value: selectedChoice, optionsCaption: '---'"></select>
                                 </label>
                             </div>
                         </div>
@@ -86,15 +83,9 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="form-group">
+                            <div class="form-group" id="productAreas">
                                 <label>Product Area:
-                                    <select name="productArea">
-                                        <option value="">---</option>
-                                        <option value="policies">Policies</option>
-                                        <option value="billing">Billing</option>
-                                        <option value="claims">Claims</option>
-                                        <option value="reports">Reports</option>
-                                    </select>
+                                    <select name="productArea" data-bind="options: areas, optionsText: 'label', optionsValue: 'id', value: selectedChoice, optionsCaption: '---'"></select>
                                 </label>
                             </div>
                         </div>
@@ -105,5 +96,8 @@
                 </form>
             </div>
         </div>
+        <script type='text/javascript' src='../js/knockout-3.4.2.js'></script>
+        <script src="js/models/ClientViewModel.js"></script>
+        <script src="js/models/ProductAreaViewModel.js"></script>
     </body>
 </html>
