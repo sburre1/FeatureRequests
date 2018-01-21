@@ -52,7 +52,7 @@ class webServerHandler(SimpleHTTPRequestHandler):
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             self.wfile.write("<html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>")
-            self.wfile.write("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>")
+            self.wfile.write("<link rel='shortcut icon' href='../img/favicon.ico' type='image/x-icon'><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>")
             self.wfile.write("<link rel='stylesheet' href='includes/styles.css'></head>")
             self.wfile.write("<body class='container'>")
             
@@ -142,7 +142,7 @@ class webServerHandler(SimpleHTTPRequestHandler):
             self.end_headers()
             
             # write output to html page to let user know request was successfully submitted:
-            self.wfile.write("<html><body>")
+            self.wfile.write("<html><head> <link rel='shortcut icon' href='../img/favicon.ico' type='image/x-icon'></head><body>")
             self.wfile.write("<b>You have successfully submitted a new feature request.</b>")
             self.wfile.write("<p>To view all feature requests submitted, <a href='/view_all.html'>View All</a>")
             self.wfile.write("<p>To submit another request, click to return: <a href='/'>Return To Main Page</a></p>")
