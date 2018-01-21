@@ -24,6 +24,9 @@ class webServerHandler(SimpleHTTPRequestHandler):
         if self.path == '/':
             self.path = '/index.html'
             return SimpleHTTPRequestHandler.do_GET(self)
+        if self.path == '/img/favicon.ico':
+            self.path = 'img/favicon.ico'
+            return SimpleHTTPRequestHandler.do_GET(self)
         if self.path == '/includes/styles.css':
             self.path = '/includes/styles.css'
             return SimpleHTTPRequestHandler.do_GET(self)
