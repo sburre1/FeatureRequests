@@ -3,6 +3,8 @@ Homework assignment for BriteCore
 
 Project Uses the following Tech Stack:
 
+OS: Ubuntu 
+
 Python Version: Python 2.7.10
 
 SimpleHTTPServer
@@ -10,6 +12,8 @@ SimpleHTTPServer
 JavaScript: KnockoutJS 3.4.2
 
 ORM: Sql-Alchemy
+
+NOTE: This project has been deployed to an Amazon EC2 Ubuntu Server.
 
 SET UP DATABASE:
 ------------------------------------------
@@ -48,6 +52,8 @@ Open a termianl window:
     3.) Run the following command to install requests: sudo easy_install requests
     
     4.) Run test cases:  nosetests --verbosity=2 test_feature_requests.py
+    
+    NOTE: The python script MUST be running for the tests to pass!
 
 Viewing the Database manually:
 ------------------------------------------
